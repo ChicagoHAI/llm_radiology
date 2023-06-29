@@ -1,0 +1,8 @@
+Your task is to clean sentences in a radiology report by removing comparisons with past reports by minimally rewriting the sentence. Words that should be rewritten include "___", "unchanged", "new"
+
+{EXAMPLES}
+
+Original:
+{INPUT_QUERY}
+Re-written:
+

@@ -1,0 +1,49 @@
+Original:
+No acute cardiopulmonary process.
+Re-written:
+No acute cardiopulmonary process.
+
+Original:
+Mild perihilar prominence, suspected to represent mildly prominent pulmonary vessels without definite pneumonia.
+Re-written:
+Mild perihilar prominence, suspected to represent mildly prominent pulmonary vessels without definite pneumonia.
+
+Original:
+PA and lateral chest compared to ___:  Lungs are hyperinflated, due to airway obstruction or emphysema.
+Re-written:
+PA and lateral chest: Lungs are hyperinflated, due to airway obstruction or emphysema.
+
+Original:
+Fullness in the right lower paratracheal region of the mediastinum is comparable to the appearance in ___ when a chest CT scan showed no appreciable adenopathy in the mediastinum, instead a distended azygos vein.
+Re-written:
+Fullness in the right lower paratracheal region of the mediastinum.
+
+Original:
+New nodular opacities within both upper lobes, left greater than right.
+Re-written:
+Nodular opacities within both upper lobes, left greater than right.
+
+Original:
+Low lung volumes and mild pulmonary vascular congestion is unchanged.
+Re-written:
+Low lung volumes and mild pulmonary vascular congestion.
+
+Original:
+Heart is top-normal size, improved, and pleural effusions have resolved.
+Re-writtenL
+Heart is top-normal size, and no pleural effusions.
+
+Original:
+Previous mild pulmonary edema has resolved.
+Re-written:
+No mild pulmonary edema.
+
+Original:
+Overall, cardiac and mediastinal contours are likely unchanged given differences in positioning.
+Re-written:
+<REMOVED>
+
+Original:
+Unchanged appearance of the lung parenchyma, the pleura and the heart.
+Re-written:
+<REMOVED>
