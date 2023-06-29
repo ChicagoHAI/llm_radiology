@@ -11,7 +11,7 @@ def inference(instructions, examples, input_list, model_name, output_file):
     with open(output_file, "w") as fout:
         for input_sent in input_list:
             input_text = instructions.format(EXAMPLES=examples, INPUT_QUERY=input_sent)
-            print(input_text)
+            # print(input_text)
             input_ids = tokenizer(input_sent, return_tensors="pt").input_ids.to("cuda")
             outputs = model.generate(input_ids, max_length=200, bos_token_id=0)
             result = tokenizer.decode(outputs[0], skip_special_tokens=True)
