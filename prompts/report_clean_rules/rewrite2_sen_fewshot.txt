@@ -1,0 +1,39 @@
+Original:
+Feeding tube ends in the upper stomach.
+New:
+Feeding tube ends in the upper stomach.
+
+Original:
+Dr. ___ communicated the above results to Dr. ___ at 8:55 am on ___ by telephone.
+New:
+REMOVED
+
+Original:
+ET tube is in standard placement.
+New:
+ET tube is in standard placement.
+
+Original:
+These findings were communicated to Dr ___ ___ PCP at ___ ___) via telephone on ___ at 10:30 am by Dr ___.
+New:
+REMOVED
+
+Original:
+No evidence of acute disease.
+New:
+No evidence of acute disease.
+
+Original:
+NOTIFICATION:   Dr. ___ reported the findings to Dr ___ by telephone on ___ at 9:32 AM, 2 minutes after discovery of the findings.
+New:
+REMOVED
+
+Original:
+Findings were relayed to Dr. ___.
+New:
+REMOVED
+
+Original:
+These results were entered into the critical results communication dashboard on ___ by Dr. ___.
+New:
+REMOVED

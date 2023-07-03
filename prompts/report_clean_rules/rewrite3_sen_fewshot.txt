@@ -1,0 +1,39 @@
+Original:
+Feeding tube ends in the upper stomach.
+New:
+Feeding tube ends in the upper stomach.
+
+Original:
+If clinically warranted, correlation with cross-sectional imaging might be considered.
+New:
+REMOVED
+
+Original:
+ET tube is in standard placement.
+New:
+ET tube is in standard placement.
+
+Original:
+Recommend repositioning.
+New:
+REMOVED
+
+Original:
+While this could be due to cardiomyopathy, the somewhat globular configuration raises concern for a possible pericardial effusion and correlation with echocardiogram is suggested.
+New:
+While this could be due to cardiomyopathy, the somewhat globular configuration raises concern for a possible pericardial effusion.
+
+Original:
+Follow-up in ___ weeks for documentation of resolution is reccomended.
+New:
+REMOVED
+
+Original:
+No evidence of acute disease.
+New:
+No evidence of acute disease.
+
+Original:
+This should be advanced for appropriate positioning.
+New:
+REMOVED

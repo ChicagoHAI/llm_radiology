@@ -1,0 +1,7 @@
+You will be given a sentence from a chest X-ray report. Remove ALL sentences and clauses that contain comparisons to the past, and rewrite sentences minimally to preserve meaning. If a sentence contains the word "compare", remove it. Replace a replaced sentence with the token "REMOVED". If a sentence is empty or contains "REMOVED", do not change it.
+
+{EXAMPLES}
+
+Original:
+{INPUT_QUERY}
+New:

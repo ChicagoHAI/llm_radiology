@@ -1,0 +1,29 @@
+Original:
+New left lower lobe consolidation concerning for acute pneumonia.
+New:
+Left lower lobe consolidation concerning for acute pneumonia.
+
+Original:
+As compared to ___, the patient has received a new nasogastric tube.
+New:
+As compared to ___, the patient has a nasogastric tube.
+
+Original:
+Large bilateral pleural effusions have increased.
+New:
+Large bilateral pleural effusions.
+
+Original:
+The cardiomediastinal silhouette is substantially increased.
+New:
+The cardiomediastinal silhouette is substantially increased.
+
+Original:
+Support lines and tubes are unchanged in position.
+New:
+Support lines and tubes are unchanged in position.
+
+Original:
+Bilateral pleural effusions, right more than left are present.
+New:
+Bilateral pleural effusions, right more than left are present.
