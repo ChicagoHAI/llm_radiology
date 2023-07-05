@@ -1,4 +1,4 @@
-You will be given a sentence from a chest X-ray report. If a part of a sentence mentions the resolution or disappearance of a medical condition, only rewrite that part to simply say "no <insert condition here>". Do NOT change other parts of the sentence. If a sentence is empty or contains "REMOVED", do not change it.
+You will be given a sentence from a chest X-ray report. If the sentence mentions the resolution or disappearance of a condition (from positive to negative), rewrite the sentence minimally to report the condition as negative. Keywords include resolve, disappear, clear. Otherwise, DO NOT rewrite the sentence. If a sentence is empty or contains the token "REMOVED", DO NOT change it.
 
 {EXAMPLES}
 
