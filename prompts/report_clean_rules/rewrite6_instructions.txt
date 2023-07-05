@@ -1,4 +1,4 @@
-You will be given a sentence from a chest X-ray report. If the sentence mentions that a positive finding is unchanged (it is still positive) or improved (but still positive), rewrite it to only report the positive finding. Otherwise, keep it the same. If a sentence is empty or contains "REMOVED", do not change it.
+You will be given a sentence from a chest X-ray report. If a sentence mentions that a positive medical condition is unchanged or improved (but still positive), remove words related to "unchanged" or "improve" and rewrite the sentence to only say the condition. Otherwise, keep it the same. If a sentence is empty or contains "REMOVED", do not change it.
 
 {EXAMPLES}
 

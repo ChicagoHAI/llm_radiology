@@ -1,12 +1,12 @@
 Original:
-Feeding tube ends in the upper stomach.
-New:
-Feeding tube ends in the upper stomach.
-
-Original:
 Dr. ___ communicated the above results to Dr. ___ at 8:55 am on ___ by telephone.
 New:
 REMOVED
+
+Original:
+Feeding tube ends in the upper stomach.
+New:
+Feeding tube ends in the upper stomach.
 
 Original:
 ET tube is in standard placement.

@@ -1,4 +1,4 @@
-You will be given a sentence from a chest X-ray report. If it mentions that a finding is new, rewrite it to only report the finding in present tense. Otherwise, keep it the same. If a sentence is empty or contains "REMOVED", do not change it.
+You will be given a sentence from a chest X-ray report. If a sentence mentions that a *condition* is new or increased, rewrite it to only report the finding in present tense. If the sentence mentions changes to an organ (e.g. lung, heart), do not rewrite it. Otherwise, keep it the same. If a sentence is empty or contains "REMOVED", do not change it.
 
 {EXAMPLES}
 

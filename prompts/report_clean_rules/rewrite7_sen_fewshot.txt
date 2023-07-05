@@ -1,7 +1,7 @@
 Original:
-Pleural effusions have resolved.
+"In comparison to ___, lung volumes have improved, and previously reported pulmonary edema has resolved."
 New:
-No pleural effusions.
+"In comparison to ___, lung volumes have improved, and no pulmonary edema."
 
 Original:
 Previous mild pulmonary edema and possible concurrent pneumonia has all cleared.
@@ -12,6 +12,16 @@ Original:
 Disappearance of postoperative emphysema.
 New:
 No emphysema.
+
+Original:
+Right upper lobe  pneumonia present in ___, has finely resolved.
+New:
+No right upper lobe  pneumonia.
+
+Original:
+PA and lateral chest compared to ___:  A previous right apical pneumothorax has resolved with re-expansion of the collapsed right middle lobe now filling that space.
+New:
+PA and lateral chest compared to ___:  No right apical pneumothorax.
 
 Original:
 Small right apical pneumothorax.

@@ -14,6 +14,11 @@ New:
 Large bilateral pleural effusions.
 
 Original:
+In comparison with the study of ___, there are lower lung volumes.
+New:
+There are lower lung volumes.
+
+Original:
 The cardiomediastinal silhouette is substantially increased.
 New:
 The cardiomediastinal silhouette is substantially increased.
