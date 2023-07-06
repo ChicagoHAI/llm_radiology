@@ -1,32 +1,37 @@
 Original:
-Lung volumes have improved, and previously reported pulmonary edema has resolved."
+There is interval resolution in the right basal consolidation and atelectasis.
 New:
-Lung volumes have improved, and no pulmonary edema."
-
-Original:
-"Focal opacity along the right heart border in the mid right lung, pneumonia vs aspiration vs atelectasis."
-New:
-"Focal opacity along the right heart border in the mid right lung, pneumonia vs aspiration vs atelectasis."
+No right basal consolidation or atelectasis.
 
 Original:
 Previous mild pulmonary edema and possible concurrent pneumonia has all cleared.
 New:
-No pulmonary edema and pneumonia.
+No pulmonary edema or pneumonia.
 
 Original:
-Right subclavian line ends in the upper SVC and a feeding tube passes into the stomach and out of view.
+Disappearance of postoperative emphysema.
 New:
-Right subclavian line ends in the upper SVC and a feeding tube passes into the stomach and out of view.
+No postoperative emphysema.
 
 Original:
-PA and lateral chest compared to ___:  A previous right apical pneumothorax has resolved.
+"In comparison to ___, lung volumes have improved, and previously reported pulmonary edema has resolved."
 New:
-PA and lateral chest compared to ___:  No right apical pneumothorax.
+"In comparison to ___, lung volumes have improved, and no pulmonary edema."
 
 Original:
-Right upper lobe  pneumonia present in ___, has finely resolved.
+Interval resolution of previously seen right lower lobe pneumonia from ___.
 New:
-No right upper lobe  pneumonia present in ___.
+No previously seen right lower lobe pneumonia from ___.
+
+Original:
+Small right apical pneumothorax.
+New:
+Small right apical pneumothorax.
+
+Original:
+Mild right basilar atelectasis.
+New:
+Mild right basilar atelectasis.
 
 Original:
 Elongation of the descending aorta.

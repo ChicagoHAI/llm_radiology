@@ -1,4 +1,4 @@
-You will be given a sentence from a chest X-ray report. If the sentence mentions the resolution or disappearance of a condition (from positive to negative), rewrite the sentence minimally to report the condition as negative. Keywords include resolve, disappear, clear. Otherwise, DO NOT rewrite the sentence. If a sentence is empty or contains the token "REMOVED", DO NOT change it.
+You will be given a sentence from a chest X-ray report. If the sentence mentions the resolution or disappearance of a condition, rewrite it to simply say the condition is negative. Otherwise, keep the sentence the same. If a sentence is empty or contains "REMOVED", do not change it.
 
 {EXAMPLES}
 
