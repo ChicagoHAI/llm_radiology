@@ -1,9 +1,4 @@
 Original:
-Compared to chest radiographs since ___, most recently one ___.
-New:
-REMOVED
-
-Original:
 As compared to ___, the lung volumes have slightly decreased.
 New:
 The lung volumes have slightly decreased.
@@ -12,6 +7,11 @@ Original:
 AP chest compared to ___ and ___, 5:05 p.m.:  The enteric tube has been advanced to the distal stomach and out of view.
 New:
 The enteric tube has been advanced to the distal stomach and out of view.
+
+Original:
+Compared to chest radiographs since ___, most recently one ___.
+New:
+REMOVED
 
 Original:
 Compared to prior chest radiographs ___ most recently 14:29.

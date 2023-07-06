@@ -1,14 +1,4 @@
 Original:
-Improvement in left basilar opacity, with persistent small left pleural effusion.
-New:
-Left basilar opacity, with small left pleural effusion.
-
-Original:
-Regression and almost complete disappearance of previously remaining bilateral pleural effusions.
-New:
-Mild bilateral pleural effusions.
-
-Original:
 There is unchanged cardiomegaly.
 New:
 There is cardiomegaly.
@@ -17,6 +7,16 @@ Original:
 Support lines and tubes are unchanged in position.
 New:
 Support lines and tubes are in position.
+
+Original:
+Improvement in left basilar opacity, with persistent small left pleural effusion.
+New:
+Left basilar opacity, with small left pleural effusion.
+
+Original:
+Regression and almost complete disappearance of previously remaining bilateral pleural effusions.
+New:
+Mild bilateral pleural effusions.
 
 Original:
 Severe bilateral perihilar pulmonary edema has not improved.

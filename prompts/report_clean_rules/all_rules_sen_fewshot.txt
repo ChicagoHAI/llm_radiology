@@ -1,0 +1,69 @@
+Original:
+AP chest compared to ___ and ___, 5:05 p.m.:  The enteric tube has been advanced to the distal stomach and out of view.
+New:
+The enteric tube has been advanced to the distal stomach and out of view.
+
+Original:
+Compared to chest radiographs since ___, most recently one ___.
+New:
+REMOVED
+
+Original:
+Dr. ___ communicated the above results to Dr. ___ at 8:55 am on ___ by telephone.
+New:
+REMOVED
+
+Original:
+If clinically warranted, correlation with cross-sectional imaging might be considered.
+New:
+REMOVED
+
+Original:
+Status post cholecystectomy.
+New:
+REMOVED
+
+Original:
+Lateral view shows atherosclerotic coronary calcification in the left circumflex.
+New:
+Atherosclerotic coronary calcification in the left circumflex.
+
+Original:
+New left lower lobe consolidation concerning for acute pneumonia.
+New:
+Left lower lobe consolidation concerning for acute pneumonia.
+
+Original:
+Large bilateral pleural effusions have increased.
+New:
+Large bilateral pleural effusions.
+
+Original:
+There is unchanged cardiomegaly.
+New:
+There is cardiomegaly.
+
+Original:
+Improvement in left basilar opacity, with persistent small left pleural effusion.
+New:
+Left basilar opacity, with small left pleural effusion.
+
+Original:
+There is interval resolution in the right basal consolidation and atelectasis.
+New:
+No right basal consolidation or atelectasis.
+
+Original:
+Feeding tube ends in the upper stomach.
+New:
+Feeding tube ends in the upper stomach.
+
+Original:
+No evidence of acute disease.
+New:
+No evidence of acute disease.
+
+Original:
+The cardiomediastinal silhouette is substantially increased.
+New:
+The cardiomediastinal silhouette is substantially increased.

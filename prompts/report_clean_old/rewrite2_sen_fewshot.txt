@@ -1,20 +1,20 @@
 Original:
+Feeding tube ends in the upper stomach.
+New:
+Feeding tube ends in the upper stomach.
+
+Original:
 Dr. ___ communicated the above results to Dr. ___ at 8:55 am on ___ by telephone.
 New:
 REMOVED
 
 Original:
-Feeding tube ends in the upper stomach.
-New:
-Feeding tube ends in the upper stomach.
-
-Original:
 ET tube is in standard placement.
 New:
 ET tube is in standard placement.
 
 Original:
-These findings were communicated to Dr ___ ___ PCP at ___ ___ via telephone on ___ at 10:30 am by Dr ___.
+These findings were communicated to Dr ___ ___ PCP at ___ ___) via telephone on ___ at 10:30 am by Dr ___.
 New:
 REMOVED
 

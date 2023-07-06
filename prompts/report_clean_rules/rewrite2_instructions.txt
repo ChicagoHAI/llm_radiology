@@ -1,4 +1,4 @@
-You will be given a sentence from a chest X-ray report. Remove ALL sentences and clauses that contain information about communication between medical professionals, such as between doctors or nurses. If a sentence is empty after cleaning, replace it with the token "REMOVED". If a sentence is empty or contains "REMOVED", do not change it.
+You will be given a sentence from a chest X-ray report. Remove ALL sentences that contain information about communication between medical professionals, such as between doctors or nurses. If a sentence is empty after cleaning, replace it with the token "REMOVED". If a sentence contains "REMOVED", do not change it.
 
 {EXAMPLES}
 
