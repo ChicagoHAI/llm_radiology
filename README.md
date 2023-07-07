@@ -25,7 +25,7 @@ pipe.model = deepspeed.init_inference(
 
 The function init_reference() wraps the model inside an InferenceEngine object so that inference can be optimized. mp_size refers to model-parallel size, which indicates the number of GPUs the model can be split into. In our case, Flan-T5-XXL fits inside 1 GPU, so mp_size is 1.
 
-injection_policy indicates which layers of the transformer we want to optimize. I believe for [Link models](https://github.com/microsoft/DeepSpeed/blob/master/deepspeed/module_inject/replace_policy.py) that are supported by DeepSpeed, to optimize, we only need to set replace_with_kernek_inject=True, but for models not supported, we need to specify the layers as above.
+injection_policy indicates which layers of the transformer we want to optimize. I believe for [models](https://github.com/microsoft/DeepSpeed/blob/master/deepspeed/module_inject/replace_policy.py) that are supported by DeepSpeed, to optimize, we only need to set replace_with_kernek_inject=True, but for models not supported, we need to specify the layers as above.
 
 Then, doing inference is simply
 
