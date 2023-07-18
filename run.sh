@@ -1,6 +1,6 @@
 #!/bin/bash
 
-torchrun --nproc_per_node=4 --master_port=4001 train.py \
+torchrun --nproc_per_node=4 --master_port=4001 finetune.py \
     --model_name_or_path /data/LLAMA_hf/llama-7b \
     --data_path /data/dangnguyen/report_generation/mimic_data/finetune_llm/finetune_imp.json \
     --bf16 True \
