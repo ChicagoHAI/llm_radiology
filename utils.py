@@ -46,7 +46,11 @@ def openai_completion(
     max_batches=sys.maxsize,
     return_text=False,
     **decoding_kwargs,
+<<<<<<< HEAD
 ) -> Union[Union[StrOrOpenAIObject], Sequence[StrOrOpenAIObject], Sequence[Sequence[StrOrOpenAIObject]],]:
+=======
+):
+>>>>>>> de61e84d85395cddc53bc67020001e805a4ee925
     """Decode with OpenAI API.
 
     Args:
@@ -170,4 +174,8 @@ def jload(f, mode="r"):
     f = _make_r_io_base(f, mode)
     jdict = json.load(f)
     f.close()
+<<<<<<< HEAD
     return jdict
+=======
+    return jdict
+>>>>>>> de61e84d85395cddc53bc67020001e805a4ee925

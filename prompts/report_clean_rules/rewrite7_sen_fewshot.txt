@@ -1,0 +1,39 @@
+Original:
+There is interval resolution in the right basal consolidation and atelectasis.
+New:
+No right basal consolidation or atelectasis.
+
+Original:
+Previous mild pulmonary edema and possible concurrent pneumonia has all cleared.
+New:
+No pulmonary edema or pneumonia.
+
+Original:
+Disappearance of postoperative emphysema.
+New:
+No postoperative emphysema.
+
+Original:
+"In comparison to ___, lung volumes have improved, and previously reported pulmonary edema has resolved."
+New:
+"In comparison to ___, lung volumes have improved, and no pulmonary edema."
+
+Original:
+Interval resolution of previously seen right lower lobe pneumonia from ___.
+New:
+No previously seen right lower lobe pneumonia from ___.
+
+Original:
+Small right apical pneumothorax.
+New:
+Small right apical pneumothorax.
+
+Original:
+Mild right basilar atelectasis.
+New:
+Mild right basilar atelectasis.
+
+Original:
+Elongation of the descending aorta.
+New:
+Elongation of the descending aorta.

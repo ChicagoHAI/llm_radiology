@@ -1,0 +1,29 @@
+Original:
+Pleural effusions have resolved.
+New:
+No pleural effusions.
+
+Original:
+Previous mild pulmonary edema and possible concurrent pneumonia has all cleared.
+New:
+No pulmonary edema and pneumonia.
+
+Original:
+Disappearance of postoperative emphysema.
+New:
+No emphysema.
+
+Original:
+Small right apical pneumothorax.
+New:
+Small right apical pneumothorax.
+
+Original:
+No new focal opacities to suggest pneumonia.
+New:
+No new focal opacities to suggest pneumonia.
+
+Original:
+Elongation of the descending aorta.
+New:
+Elongation of the descending aorta.

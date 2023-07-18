@@ -1,0 +1,7 @@
+You will be given a sentence from a chest X-ray report. Remove all instances of "new", "increase", "greater", "worsen", etc. and rewrite the sentence to preserve meaning. If the sentence mentions changes to an organ (e.g. lung, heart), do not rewrite it. If a sentence contains "REMOVED", do not change it.
+
+{EXAMPLES}
+
+Original:
+{INPUT_QUERY}
+New:

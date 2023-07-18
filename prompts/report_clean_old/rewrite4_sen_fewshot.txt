@@ -1,0 +1,39 @@
+Original:
+The lateral radiograph shows evidence of anterior ligament calcification at the anterior aspect of the thoracic spine.
+New:
+Evidence of anterior ligament calcification at the anterior aspect of the thoracic spine.
+
+Original:
+Status post cholecystectomy.
+New:
+REMOVED
+
+Original:
+AP chest reviewed in the absence of prior chest radiographs:  Heart is top normal size.
+New:
+Heart is top normal size
+
+Original:
+Multiple surgical clips are again seen overlying the left upper abdomen in this patient status post left nephrectomy.
+New:
+Multiple surgical clips are again seen overlying the left upper abdomen in this patient.
+
+Original:
+Lateral view shows atherosclerotic coronary calcification in the left circumflex.
+New:
+Atherosclerotic coronary calcification in the left circumflex.
+
+Original:
+Feeding tube ends in the upper stomach.
+New:
+Feeding tube ends in the upper stomach.
+
+Original:
+ET tube is in standard placement.
+New:
+ET tube is in standard placement.
+
+Original:
+No evidence of acute disease.
+New:
+No evidence of acute disease.
