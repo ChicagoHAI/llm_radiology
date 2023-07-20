@@ -89,7 +89,7 @@ if __name__ == "__main__":
     end = (PARTITION + 1) * workload
     print('Data partition: [{}, {}]'.format(start, end))
 
-    data = pd.read_csv(inpath)[start:end]
+    data = pd.read_csv(inpath)[start:end].fillna('')
     input_list = list(data["report"])
 
     # df_gt = data[['report']].fillna('_') # make sure the CSV file has a column named 'report'
