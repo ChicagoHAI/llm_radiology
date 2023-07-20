@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 
 sys.path.append('/data/dangnguyen/report_generation/report-generation/')
+sys.path.remove('/data/chacha/CXR-Report-Metric')
 from CXRMetric.run_eval import calc_metric
 
 cxr_labels = [
@@ -69,10 +70,14 @@ def write_report(instructions, input_list, model, tokenizer):
     return output
 
 if __name__ == "__main__":
+    GT_PATH = '/data/dangnguyen/report_generation/mimic_data/test_ind_imp_chexb.csv'
+    GEN_PATH = '/data/dangnguyen/report_generation/mimic_data/finetune_llm/test_gen_use-gt_imp.csv'
+    OUT_PATH = '/data/dangnguyen/report_generation/mimic_data/finetune_llm/test_gen_use-gt_imp_metrics.csv'
+
     xray_llama = transformers.LlamaForCausalLM.from_pretrained('./radiology_models/xray_llama_7b/').to('cuda:0')
     llama_tokenizer = transformers.LlamaTokenizer.from_pretrained('./radiology_models/xray_llama_7b/')
 
-    data = pd.read_csv('/data/dangnguyen/report_generation/mimic_data/test_ind_imp_chexb.csv').fillna('')
+    data = pd.read_csv(GT_PATH).fillna('')
     input_list = format_input(data)
 
     instruct_path = '/data/dangnguyen/report_generation/llm_radiology/prompts/report_writing/instructions.txt'
@@ -81,4 +86,8 @@ if __name__ == "__main__":
     output_list = write_report(instructions, input_list, xray_llama, llama_tokenizer)
 
     data['generated'] = output_list
-    data[['study_id','report','generated']].to_csv('/data/dangnguyen/report_generation/mimic_data/finetune_llm/test_gen_use-gt_imp.csv', index=False)
+    data[['study_id','report','generated']].rename(columns={'report':'original', generated:'report'}).to_csv(GEN_PATH, index=False)
+
+    calc_metric(GT_PATH, GEN_PATH, OUT_PATH, use_idf=False)
+
+
