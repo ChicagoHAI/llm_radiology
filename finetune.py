@@ -19,7 +19,7 @@ from typing import Dict, Optional, Sequence
 
 import torch
 import transformers
-import utils
+import finetune_utils
 from torch.utils.data import Dataset
 from transformers import Trainer
 
