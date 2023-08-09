@@ -1,5 +1,4 @@
 import sys
-
 import transformers
 import torch
 from torch.utils.data import DataLoader
@@ -8,20 +7,17 @@ import numpy as np
 from collections import OrderedDict
 
 sys.path.append('/data/dangnguyen/report_generation/report-generation/')
-# sys.path.remove('/data/chacha/CXR-Report-Metric')
+sys.path.remove('/data/chacha/CXR-Report-Metric')
 from CXRMetric.run_eval import calc_metric
 from CXRMetric.CheXbert.src.label import label
 
 from model.my_models import DenseChexpertModel
 
-VISION_MODEL_PATH = './radiology_models/vision/model_best.pth'
-THRESHOLDS_PATH = './radiology_models/vision/tuned_thresholds.pt'
 LLAMA_PATH = './radiology_models/xray_llama_7b/'
 INSTRUCTIONS_PATH = './prompts/report_writing/instructions.txt'
 
 GT_PATH = '/data/dangnguyen/report_generation/mimic_data/test_ind_imp.csv'
 GEN_PATH = '/data/dangnguyen/report_generation/mimic_data/finetune_llm/test_gen_imp.csv'
-OUT_PATH = '/data/dangnguyen/report_generation/mimic_data/finetune_llm/test_gen_imp_metrics.csv'
 
 VISION_OUT_PATH = '/data/dangnguyen/report_generation/mimic_data/finetune_llm/test_pred_viz.csv'
 IMG_PATH = '/data/dangnguyen/report_generation/mimic_data/test_images.pt'
@@ -35,7 +31,10 @@ cxr_labels = [
 # Takes in a list of images and returns the predicted labels for the
 # 14 MIMIC-CXR conditions. Negative, uncertain, and missing labels are
 # mapped to 0
-def predict_labels(images):
+def predict_img_labels(images):
+    VISION_MODEL_PATH = './radiology_models/vision/model_best.pth'
+    THRESHOLDS_PATH = './radiology_models/vision/tuned_thresholds.pt'
+
     device = 'cuda:1'
     checkpoint = torch.load(VISION_MODEL_PATH)
     state_dict = checkpoint['state_dict']
@@ -136,7 +135,7 @@ if __name__ == "__main__":
     model_input = data[['indication']]
 
     images = torch.load(IMG_PATH)
-    predicted_labels = predict_labels(images)
+    predicted_labels = predict_img_labels(images)
     df_pred_labels = pd.DataFrame(predicted_labels, columns=cxr_labels)
     
     model_input = pd.concat([model_input, df_pred_labels], axis=1) # columns: indication, [cxr_labels]
@@ -147,7 +146,5 @@ if __name__ == "__main__":
 
     data['generated'] = output_list
     data[['study_id','report','generated']].rename(columns={'report':'original', 'generated':'report'}).to_csv(GEN_PATH, index=False)
-
-    calc_metric(GT_PATH, GEN_PATH, OUT_PATH, use_idf=False)
 
 

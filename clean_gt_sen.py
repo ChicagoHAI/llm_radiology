@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import torch
 import math
+import os
 
 import sys
 sys.path.append('/data/dangnguyen/report_generation/report-generation')
@@ -18,16 +19,22 @@ from CXRMetric.CheXbert.src.label import label
 CHEXBERT_PATH = '/data/dangnguyen/report_generation/models/chexbert.pth'
 DEVICE = int(sys.argv[1])
 PARTITION = DEVICE
-TOTAL_EXAMPLES = 71989
+# TOTAL_EXAMPLES = 71989
+TOTAL_EXAMPLES = 160
 NUM_GPUS = 4
 
 workload = math.ceil(TOTAL_EXAMPLES / NUM_GPUS)
-inpath = "/data/dangnguyen/report_generation/mimic_data/report_cleaning/train_gt_imp_sen_72k_uniq.csv"
-# inpath = "/data/dangnguyen/report_generation/mimic_data/report_cleaning/test_cleaning_gt_200.csv"
-outpath = '/data/dangnguyen/report_generation/mimic_data/report_cleaning/clean_72k/cleaned_frag_{}.csv'.format(PARTITION)
+# inpath = "/data/dangnguyen/report_generation/mimic_data/report_cleaning/train_gt_imp_sen_72k_uniq.csv"
+# outpath = '/data/dangnguyen/report_generation/mimic_data/report_cleaning/clean_72k/cleaned_frag_{}.csv'.format(PARTITION)
 
-gt_pos_path = './gt_pos_labels_72k.pt'
-gt_neg_path = './gt_neg_labels_72k.pt'
+inpath = "/data/dangnguyen/report_generation/mimic_data/report_cleaning/test_cleaning_gt_200.csv"
+outpath = '/data/dangnguyen/report_generation/mimic_data/report_cleaning/test_flan_frag_{}.csv'.format(PARTITION)
+
+# gt_pos_path = './gt_pos_labels_72k.pt'
+# gt_neg_path = './gt_neg_labels_72k.pt'
+
+gt_pos_path = './gt_pos_labels_200.pt'
+gt_neg_path = './gt_neg_labels_200.pt'
 
 torch.cuda.set_device(DEVICE)
 print('Currently using CUDA: {}'.format(DEVICE))
@@ -77,6 +84,30 @@ def labels_changed(y_gt, y_gt_neg, output_list):
     return label_is_diff
 
 if __name__ == "__main__":
+    start = PARTITION * workload
+    end = (PARTITION + 1) * workload
+    print('Data partition: [{}, {}]'.format(start, end))
+
+    if not (os.path.exists(gt_pos_path) and os.path.exists(gt_neg_path)):
+        data_full = pd.read_csv(inpath).fillna('_')
+        df_gt = data_full[['report']] # make sure the CSV file has a column named 'report'
+        df_gt.to_csv('./gt_pre_chexbert.csv', index=False) # temporary file for the purpose of labeling. Will be deleted.
+        y_gt = label(CHEXBERT_PATH, './gt_pre_chexbert.csv', use_gpu=True)
+        y_gt = np.array(y_gt).T
+
+        # Note on labels:
+        # 0: unmentioned ; 1: positive ; 2: negative ; 3: uncertain
+        y_gt_neg = y_gt.copy()
+        y_gt[(y_gt == 2) | (y_gt == 3)] = 0
+        y_gt_neg[(y_gt_neg == 1) | (y_gt_neg == 3)] = 0
+        y_gt_neg[y_gt_neg == 2] = 1
+
+        torch.save(y_gt, gt_pos_path)
+        torch.save(y_gt_neg, gt_neg_path)
+
+    y_gt = torch.load(gt_pos_path)[start:end]
+    y_gt_neg = torch.load(gt_neg_path)[start:end]
+
     pipe = pipeline("text2text-generation", model="google/flan-t5-XXL", device=DEVICE)
     pipe.model = deepspeed.init_inference(
         pipe.model,
@@ -85,33 +116,11 @@ if __name__ == "__main__":
         injection_policy={T5Block: ('SelfAttention.o', 'EncDecAttention.o', 'DenseReluDense.wo')},
     )
 
-    start = PARTITION * workload
-    end = (PARTITION + 1) * workload
-    print('Data partition: [{}, {}]'.format(start, end))
-
     data = pd.read_csv(inpath)[start:end].fillna('')
     input_list = list(data["report"])
 
-    # df_gt = data[['report']].fillna('_') # make sure the CSV file has a column named 'report'
-    # df_gt.to_csv('./gt_pre_chexbert.csv', index=False) # temporary file for the purpose of labeling. Will be deleted.
-    # y_gt = label(CHEXBERT_PATH, './gt_pre_chexbert.csv', use_gpu=True)
-    # y_gt = np.array(y_gt).T
-
-    # # Note on labels:
-    # # 0: unmentioned ; 1: positive ; 2: negative ; 3: uncertain
-    # y_gt_neg = y_gt.copy()
-    # y_gt[(y_gt == 2) | (y_gt == 3)] = 0
-    # y_gt_neg[(y_gt_neg == 1) | (y_gt_neg == 3)] = 0
-    # y_gt_neg[y_gt_neg == 2] = 1
-
-    # torch.save(y_gt, gt_pos_path)
-    # torch.save(y_gt_neg, gt_neg_path)
-
-    y_gt = torch.load(gt_pos_path)[start:end]
-    y_gt_neg = torch.load(gt_neg_path)[start:end]
-
-    # RULES = [1, 2, 3, 4, 5, 6, 7]
-    RULES = [1, 5, 6, 7, 2, 3, 4]
+    RULES = [1, 2, 3, 4, 5, 6, 7]
+    # RULES = [1, 5, 6, 7, 2, 3, 4]
     for i in RULES:
         rule = 'rewrite' + str(i)
         print(rule)
@@ -133,7 +142,7 @@ if __name__ == "__main__":
         input_list = output_list
 
         # outputting intermediate results
-        tmp_path = '/data/dangnguyen/report_generation/mimic_data/report_cleaning/clean_72k/clean_frag_{}_rule_{}.csv'.format(PARTITION, rule)
+        tmp_path = '/data/dangnguyen/report_generation/mimic_data/report_cleaning/clean_test/test_clean_frag_{}_rule_{}.csv'.format(PARTITION, rule)
         data_tmp = data.copy()
         data_tmp['llm_rewritten'] = output_list
         data_tmp.to_csv(tmp_path, index=False)
