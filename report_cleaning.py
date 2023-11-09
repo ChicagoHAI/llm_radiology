@@ -193,18 +193,14 @@
 
 
 import os
-import transformers
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-from transformers import pipeline, set_seed
-from transformers.deepspeed import HfDeepSpeedConfig
-import deepspeed
+from transformers import set_seed
 from datasets import Dataset
 import argparse
 from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments, DataCollatorForSeq2Seq
 import torch
 import pandas as pd
 import numpy as np
-import nltk
 
 from CXRMetric.CheXbert.src.label import label
 
@@ -217,7 +213,7 @@ def parse_args():
     """Parse the arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--chexbert_path", type=str, default=None, 
-                        help="Path the CheXbert model")
+                        help="Path to the CheXbert model")
     parser.add_argument("--dataset_path", type=str, default=None, 
                         help="Path to the CSV file of sentences to clean. Ensure there is a `report` column")
     parser.add_argument("--output_dir", type=str, default="./report_cleaning", 
@@ -354,6 +350,7 @@ def predict(args, model, tokenizer, data_collator,
 
         df_res = pd.DataFrame(predictions, columns=['report'])
         df_res.to_csv(os.path.join(output_dir, outfile), index=False)
+
 
 if __name__ == '__main__':
     args, _ = parse_args()
