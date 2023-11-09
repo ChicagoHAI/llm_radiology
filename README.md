@@ -79,7 +79,7 @@ Follow [Alpaca's](https://github.com/tatsu-lab/stanford_alpaca) finetuning instr
 Insert the path to your finetuned Pragmatic LLaMA model, path to indications, path to the directory containing the vision model and tuned classification thresholds, and specify an output path for predicted vision labels. This helps save time on subsequent runs on the same images by not having to re-run the classifier.
 
 ```
-python pragmatic_llama_inference.py --llama_path <insert> --instruct_path ./prompts/report_writing/instructions.txt --indication_path <insert> --vision_path <insert> --image_path <insert> --vision_out_path <insert> --outpath <insert>
+python pragmatic_llama_inference.py --llama_path <insert> --indication_path <insert> --vision_path <insert> --image_path <insert> --vision_out_path <insert> --outpath <insert>
 ```
 
 [1] Johnson, Alistair, Pollard, Tom, Mark, Roger, Berkowitz, Seth, and Steven Horng. "MIMIC-CXR Database" (version 2.0.0). PhysioNet (2019). https://doi.org/10.13026/C2JT1Q.
