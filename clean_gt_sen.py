@@ -88,6 +88,7 @@ if __name__ == "__main__":
     end = (PARTITION + 1) * workload
     print('Data partition: [{}, {}]'.format(start, end))
 
+    # label heuristic
     if not (os.path.exists(gt_pos_path) and os.path.exists(gt_neg_path)):
         data_full = pd.read_csv(inpath).fillna('_')
         df_gt = data_full[['report']] # make sure the CSV file has a column named 'report'

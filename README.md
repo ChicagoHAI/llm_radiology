@@ -1,4 +1,4 @@
-# Using DeepSpeed for faster inference
+<!-- # Using DeepSpeed for faster inference
 
 We first need to import packages:
 
@@ -37,4 +37,32 @@ To run a python script with DeepSpeed, the command is
 
 ```
 deepspeed --num_gpus n python_script.py
+``` -->
+
+# Codebase for Pragmatic Radiology Report Generation
+
+We expose the following functionalities discussed in the paper
+* Report cleaning with large language models
+* Training an image classifier for detecting positive findings
+* Finetuning LLaMA on predicted conditions and indications
+* Generating reports with Pragmatic LLaMA
+* Evaluating generated reports
+
+This code mainly works for [MIMIC-CXR](https://physionet.org/content/mimic-cxr/2.0.0/), but can be adapted slightly to work with other chest X-ray datasets. We will discuss the relevant changes in each section. Make sure to obtain the license if you are working with MIMIC-CXR.
+
+TODO: update requirements.txt
+
+## Obtaining the relevant data
+
+The input to our model is a tuple of (image, indication). Please follow the relevant dataset instructions to obtain them, especially the indication section. For MIMIC-CXR, you can use [create_section_files.py](https://github.com/MIT-LCP/mimic-cxr/tree/master/txt) to extract the indication, findings, and impression sections.
+
+## Report cleaning with large language models
+
 ```
+deepspeed --num_gpus=<num_gpus> report_cleaning.py --chexbert_path <path_to_chexbert> --dataset_path <path_to_reports> --output_dir <path_to_output_directory>
+```
+
+This cleaning method works best for one sentence at a time. The process to split sentences and keep track of their report IDs can be specific to the dataset, so we leave that implementation to the user.
+
+
+
