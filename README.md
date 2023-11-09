@@ -48,7 +48,7 @@ We expose the following functionalities discussed in the paper
 * Generating reports with Pragmatic LLaMA
 * Evaluating generated reports
 
-This code mainly works for [MIMIC-CXR](https://physionet.org/content/mimic-cxr/2.0.0/), but can be adapted slightly to work with other chest X-ray datasets. We will discuss the relevant changes in each section. Make sure to obtain the license if you are working with MIMIC-CXR.
+This code mainly works for [MIMIC-CXR](https://physionet.org/content/mimic-cxr/2.0.0/) [1], but can be adapted slightly to work with other chest X-ray datasets. We will discuss the relevant changes in each section. Make sure to obtain the license if you are working with MIMIC-CXR.
 
 TODO: update requirements.txt
 
@@ -59,10 +59,19 @@ The input to our model is a tuple of (image, indication). Please follow the rele
 ## Report cleaning with large language models
 
 ```
-deepspeed --num_gpus=<num_gpus> report_cleaning.py --chexbert_path <path_to_chexbert> --dataset_path <path_to_reports> --output_dir <path_to_output_directory>
+deepspeed --num_gpus=<num_gpus> report_cleaning.py --chexbert_path <insert> --dataset_path <insert> --output_dir <insert>
 ```
 
 This cleaning method works best for one sentence at a time. The process to split sentences and keep track of their report IDs can be specific to the dataset, so we leave that implementation to the user.
 
+## Finetuning LLaMA on predicted conditions and indications
 
+We first format the indication and groundtruth CheXbert labels into a JSON file that can be used to finetune LLaMA.
 
+```
+python format_llama_input.py --indication_path <insert> --impression_path <insert> --outpath <insert>
+```
+
+Follow [Alpaca's](https://github.com/tatsu-lab/stanford_alpaca) finetuning instructions to finetune a LLaMA model to generate radiology reports. Put the path to the above JSON file for --data_path.
+
+[1] Johnson, Alistair, Pollard, Tom, Mark, Roger, Berkowitz, Seth, and Steven Horng. "MIMIC-CXR Database" (version 2.0.0). PhysioNet (2019). https://doi.org/10.13026/C2JT1Q.
