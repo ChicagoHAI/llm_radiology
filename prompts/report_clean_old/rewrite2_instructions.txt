@@ -1,7 +1,0 @@
-You will be given a sentence from a chest X-ray report. Remove ALL sentences and clauses that contain information about communication between medical professionals, such as between doctors or nurses. Replace a removed sentence with the token "REMOVED". If a sentence is empty or contains "REMOVED", do not change it.
-
-{EXAMPLES}
-
-Original:
-{INPUT_QUERY}
-New:

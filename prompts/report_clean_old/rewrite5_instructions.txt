@@ -1,7 +1,0 @@
-You will be given a sentence from a chest X-ray report. If it mentions that a finding is new, rewrite it to only report the finding in present tense. Otherwise, keep it the same. If a sentence is empty or contains "REMOVED", do not change it.
-
-{EXAMPLES}
-
-Original:
-{INPUT_QUERY}
-New:
