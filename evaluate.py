@@ -1,18 +1,18 @@
-import sys
-import transformers
-import torch
-from torch.utils.data import DataLoader
-import pandas as pd
-import numpy as np
-from collections import OrderedDict
-
-sys.path.append('/data/dangnguyen/report_generation/report-generation/')
-sys.path.remove('/data/chacha/CXR-Report-Metric')
+import argparse
 from CXRMetric.run_eval import calc_metric
-from CXRMetric.CheXbert.src.label import label
 
-GT_PATH = '/data/dangnguyen/report_generation/mimic_data/val_ind_imp.csv'
-GEN_PATH = '/data/dangnguyen/report_generation/mimic_data/finetune_llm/val_gen_imp_clean_ind.csv'
-OUT_PATH = '/data/dangnguyen/report_generation/mimic_data/finetune_llm/val_gen_imp_clean_ind_metrics.csv'
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--gt_path", type=str, 
+                        help="Path to CSV file of groundtruth reports.")
+    parser.add_argument("--gen_path", type=str, 
+                        help="Path to CSV file of generated reports.")
+    parser.add_argument("--out_path", type=str, default="gen_metrics.csv",
+                        help="Path to CSV file containing performance scores.")
 
-calc_metric(GT_PATH, GEN_PATH, OUT_PATH, use_idf=False)
+    args = parser.parse_known_args()
+    return args
+
+if __name__ == '__main__':
+    args, _ = parse_args()
+    calc_metric(args.gt_path, args.gen_path, args.out_path, use_idf=False)

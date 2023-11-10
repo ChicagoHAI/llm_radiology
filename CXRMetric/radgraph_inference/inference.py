@@ -158,7 +158,6 @@ def cleanup():
     """Removes all the temporary files created during the inference process
     
     """
-    # os.system("rm temp_file_list.json")
     os.system("rm ./tmp/temp_dygie_input.json")
     os.system("rm ./tmp/temp_dygie_output.json")
 

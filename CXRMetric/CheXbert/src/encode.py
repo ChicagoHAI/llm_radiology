@@ -4,14 +4,11 @@ import torch
 import torch.nn as nn
 import pandas as pd
 import numpy as np
-import utils
+from CXRMetric.CheXbert.src import utils
 from models.bert_encoder import bert_encoder
 from bert_tokenizer import tokenize
 from transformers import BertTokenizer
 from collections import OrderedDict
-
-import sys
-sys.path.append('/data/dangnguyen/report_generation/report-generation/CXRMetric/CheXbert/src')
 
 from datasets.unlabeled_dataset import UnlabeledDataset
 from constants import *

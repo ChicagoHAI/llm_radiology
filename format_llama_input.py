@@ -37,27 +37,11 @@ def labels_to_eng(labels):
             diag += ', '
     return diag
 
-
-if __name__ == '__main__':
-    args, _ = parse_args()
-
-    df_ind = pd.read_csv(args.indication_path)[['study_id','report']].drop_duplicates()
-    df_ind = df_ind.rename(columns={'report': 'indication'}).fillna('')
-
-    df_imp_chexb = pd.read_csv(args.impression_path)[['study_id','report'] + CXR_LABELS]
-    df_imp_chexb = df_imp_chexb.rename(columns={'report': 'impression'})
-
-    df_ind_imp = df_imp_chexb.merge(df_ind, on='study_id')
-
-    print(df_ind_imp)
-
-    df_ind_imp_sample = df_ind_imp.sample(frac=args.sample_percent, 
-                                          random_state=args.seed)
-
-    finetune_data = []
+def format_input(df):
     instruction = "Write a radiology report responding to the indication. Include all given positive labels."
+    finetune_data = []
 
-    for _, row in df_ind_imp_sample.iterrows():
+    for _, row in df.iterrows():
         ind = row['indication']
         imp = row['impression']
         labels = labels_to_eng(row[CXR_LABELS])[:-2]
@@ -69,6 +53,22 @@ if __name__ == '__main__':
             'output': imp
         }
         finetune_data.append(sample)
+    return finetune_data
+
+
+if __name__ == '__main__':
+    args, _ = parse_args()
+
+    df_ind = pd.read_csv(args.indication_path)[['study_id','report']].drop_duplicates()
+    df_ind = df_ind.rename(columns={'report': 'indication'}).fillna('')
+
+    df_imp_chexb = pd.read_csv(args.impression_path)[['study_id','report'] + CXR_LABELS]
+    df_imp_chexb = df_imp_chexb.rename(columns={'report': 'impression'})
+
+    df_ind_imp = df_imp_chexb.merge(df_ind, on='study_id')
+    df_ind_imp_sample = df_ind_imp.sample(frac=args.sample_percent, 
+                                          random_state=args.seed)
+    finetune_data = format_input(df_ind_imp_sample)
 
     with open(args.outpath, 'w') as json_file:
         json.dump(finetune_data, json_file)

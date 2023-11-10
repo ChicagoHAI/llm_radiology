@@ -2,7 +2,7 @@ import torch
 import pandas as pd
 import numpy as np
 from transformers import BertTokenizer
-from .. import bert_tokenizer
+from CXRMetric.CheXbert.src import bert_tokenizer
 from torch.utils.data import Dataset, DataLoader
 
 class UnlabeledDataset(Dataset):

@@ -1,100 +1,41 @@
+# Code adapted from https://github.com/rajpurkarlab/CXR-Report-Metric/blob/main/CXRMetric/run_eval.py
+
 import json
 import numpy as np
 import os
 import re
 import pandas as pd
-import pickle
 import torch
-
+import sys
 from bert_score import BERTScorer
-from fast_bleu import BLEU
 from nltk.translate.bleu_score import sentence_bleu
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import f1_score
 
-import config
+sys.path.append('./CXRMetric/dygiepp/')
 from CXRMetric.radgraph_evaluate_model import run_radgraph
-
-import sys
-sys.path.append('/data/dangnguyen/report_generation/report-generation/CXRMetric/')
-sys.path.append('/data/dangnguyen/report_generation/report-generation/CXRMetric/dygiepp/')
-from CheXbert.src.label import label # a function to label reports using CheXbert
-
-"""Computes 4 individual metrics and a composite metric on radiology reports."""
+from CXRMetric.CheXbert.src.label import label
 
 # Paths to chexbert and radgraph models
-CHEXBERT_PATH = '/data/dangnguyen/report_generation/models/chexbert.pth'
-RADGRAPH_PATH ='/data/dangnguyen/report_generation/models/radgraph.tar.gz'
-
-CHEXPERT_LABELS_PATH = '/data/mimic_data/files/mimic-cxr-jpg/2.0.0/mimic-cxr-2.0.0-chexpert.csv'
-
-NORMALIZER_PATH = "CXRMetric/normalizer.pkl"
-COMPOSITE_METRIC_V0_PATH = "CXRMetric/composite_metric_model.pkl"
-COMPOSITE_METRIC_V1_PATH = "CXRMetric/radcliq-v1.pkl"
+CHEXBERT_PATH = './radiology_models/chexbert.pth'
+RADGRAPH_PATH ='./radiology_models/radgraph.tar.gz'
 
 REPORT_COL_NAME = "report"
 STUDY_ID_COL_NAME = "study_id"
 COLS = ["radgraph_combined", "bertscore", "semb_score", "bleu_score"]
 
-cache_path = "./cache/"
-pred_embed_path = os.path.join(cache_path, "pred_embeddings.pt")
-gt_embed_path = os.path.join(cache_path, "gt_embeddings.pt")
-
-weights = {"bigram": (1/2., 1/2.)}
-composite_metric_col_v0 = "RadCliQ-v0"
-composite_metric_col_v1 = "RadCliQ-v1"
-
-cxr_labels = ['Atelectasis','Cardiomegaly', 'Consolidation', 'Edema', \
+CXR_LABELS = ['Atelectasis','Cardiomegaly', 'Consolidation', 'Edema', \
 'Enlarged Cardiomediastinum', 'Fracture', 'Lung Lesion','Lung Opacity', \
 'No Finding','Pleural Effusion', 'Pleural Other', 'Pneumonia', 'Pneumothorax', 'Support Devices']
 
-# for some reason, there is another ordering (unsorted) of the labels
-cxr_labels_2 = ['Enlarged Cardiomediastinum', 'Cardiomegaly', 'Lung Opacity',\
+# another ordering (unsorted) of the labels
+CXR_LABELS_2 = ['Enlarged Cardiomediastinum', 'Cardiomegaly', 'Lung Opacity',\
 'Lung Lesion', 'Edema', 'Consolidation', 'Pneumonia', 'Atelectasis',\
 'Pneumothorax', 'Pleural Effusion', 'Pleural Other', 'Fracture', 'Support Devices', 'No Finding']
 
-# cxr_labels_2 but without No Finding
-cxr_labels_3 = ['Enlarged Cardiomediastinum', 'Cardiomegaly', 'Lung Opacity',\
-'Lung Lesion', 'Edema', 'Consolidation', 'Pneumonia', 'Atelectasis',\
-'Pneumothorax', 'Pleural Effusion', 'Pleural Other', 'Fracture', 'Support Devices']
-
-# # labels that have a non-trivial number of negative mentions
-# cxr_negative = ['Enlarged Cardiomediastinum', 'Cardiomegaly', 'Edema', 'Consolidation', 'Pneumonia', 'Pneumothorax', 'Pleural Effusion']
-
-
-class CompositeMetric:
-    """The RadCliQ-v1 composite metric.
-
-    Attributes:
-        scaler: Input normalizer.
-        coefs: Coefficients including the intercept.
-    """
-    def __init__(self, scaler, coefs):
-        """Initializes the composite metric with a normalizer and coefficients.
-
-        Args:
-            scaler: Input normalizer.
-            coefs: Coefficients including the intercept.
-        """
-        self.scaler = scaler
-        self.coefs = coefs
-
-    def predict(self, x):
-        """Generates composite metric score for input.
-
-        Args:
-            x: Input data.
-
-        Returns:
-            Composite metric score.
-        """
-        norm_x = self.scaler.transform(x)
-        norm_x = np.concatenate(
-            (norm_x, np.ones((norm_x.shape[0], 1))), axis=1)
-        pred = norm_x @ self.coefs
-        return pred
-
+cache_path = "./cache/"
+pred_embed_path = os.path.join(cache_path, "pred_embeddings.pt")
+gt_embed_path = os.path.join(cache_path, "gt_embeddings.pt")
+weights = {"bigram": (1/2., 1/2.)}
 
 def prep_reports(reports):
     """Preprocesses reports"""
@@ -104,29 +45,12 @@ def prep_reports(reports):
 
 def add_bleu_col(gt_df, pred_df):
     """Computes BLEU-2 and adds scores as a column to prediction df."""
-    # pred_df["bleu_score"] = [0.0] * len(pred_df)
-    # for i, row in gt_df.iterrows():
-    #     gt_report = prep_reports([row[REPORT_COL_NAME]])[0]
-    #     pred_row = pred_df[pred_df[STUDY_ID_COL_NAME] == row[STUDY_ID_COL_NAME]]
-    #     predicted_report = \
-    #         prep_reports([pred_row[REPORT_COL_NAME].values[0]])[0]
-        
-    #     if len(pred_row) == 1:
-    #         # bleu = BLEU([gt_report], weights) # for some reason I cannot use this package due to a bug
-    #         # score = bleu.get_score([predicted_report])["bigram"]
-    #         score = [sentence_bleu([gt_report], predicted_report, weights=(1/2, 1/2))] # to use BLEU-2
-    #         assert len(score) == 1
-    #         _index = pred_df.index[pred_df[STUDY_ID_COL_NAME] == row[STUDY_ID_COL_NAME]].tolist()[0]
-    #         pred_df.at[_index, "bleu_score"] = score[0]
-
     pred_df["bleu_score"] = [0.0] * len(pred_df)
     for i, row in gt_df.iterrows():
         gt_report = prep_reports([row[REPORT_COL_NAME]])[0]
         predicted_report = prep_reports([pred_df.loc[i][REPORT_COL_NAME]])[0]
         
-        score = [sentence_bleu([gt_report], predicted_report, weights=(1/2, 1/2))] # to use BLEU-2
-        assert len(score) == 1
-        # _index = pred_df.index[pred_df[STUDY_ID_COL_NAME] == row[STUDY_ID_COL_NAME]].tolist()[0]
+        score = [sentence_bleu([gt_report], predicted_report, weights=(1/2, 1/2))]
         pred_df.at[i, "bleu_score"] = score[0]
 
     return pred_df
@@ -187,8 +111,7 @@ def add_radgraph_col(pred_df, entities_path, relations_path):
             except:
                 continue
     radgraph_scores = []
-    count = 0
-    for i, row in pred_df.iterrows():
+    for _, row in pred_df.iterrows():
         try:
             radgraph_scores.append(study_id_to_radgraph[int(row[STUDY_ID_COL_NAME])])
         except KeyError:
@@ -201,7 +124,9 @@ def add_radgraph_col(pred_df, entities_path, relations_path):
 # Also returns a list of Negative F1's for each label
 def negative_f1(gt, pred):
     labels = range(13)
-    labels_five = [4, 5, 6, 8, 9]
+    labels_five = list(map(lambda x: CXR_LABELS_2.index(x), 
+                           ["Edema", "Consolidation", "Pneumonia", 
+                            "Pneumothorax", "Pleural Effusion"]))
     f1_scores = []
 
     for i in labels:
@@ -217,7 +142,9 @@ def negative_f1(gt, pred):
 # When `use_five` is True, we only calculate F1 with the labels:
 # Atelectasis, Consolidation, Edema, Pleural Effusion, Cardiomegaly
 def positive_f1(gt, pred):
-    labels_five = [1, 4, 5, 7, 9] # the indices of the five labels according to the cxr_labels_2 ordering
+    labels_five = list(map(lambda x: CXR_LABELS_2.index(x), 
+                           ["Cardiomegaly", "Edema", "Consolidation", 
+                            "Atelectasis", "Pleural Effusion"]))
     gt_five = gt[:, labels_five]
     pred_five = pred[:, labels_five]
 
@@ -243,12 +170,10 @@ def compute_f1(df_gt, df_pred):
     
     y_gt[(y_gt == 2) | (y_gt == 3)] = 0
 
-    torch.save(y_gt, './gt_chexb.pt')
-
     pred_pre_chexb = './pred_pre-chexbert.csv'
     df_pred.to_csv(pred_pre_chexb, index=False)
 
-    # the labels are according to the 2nd ordering (see run_eval.py)
+    # the labels are according to CXR_LABELS_2
     y_pred = label(CHEXBERT_PATH, pred_pre_chexb, use_gpu=True)
     y_pred = np.array(y_pred).T
     y_pred = y_pred[:, :]
@@ -259,10 +184,7 @@ def compute_f1(df_gt, df_pred):
     
     y_pred[(y_pred == 2) | (y_pred == 3)] = 0
 
-    torch.save(y_pred, './pred_chexb.pt')
-    
     assert y_gt.shape == y_pred.shape
-
     os.system('rm {}'.format(gt_pre_chexb))
     os.system('rm {}'.format(pred_pre_chexb))
 
@@ -336,9 +258,9 @@ def calc_metric(gt_csv, pred_csv, out_csv, use_idf=False): # TODO: support singl
 
     # run encode.py to make the semb column
     os.system(f"mkdir -p {cache_path}")
-    os.system(f"python /data/dangnguyen/report_generation/report-generation/CXRMetric/CheXbert/src/encode.py \
-              -c {CHEXBERT_PATH} -d {cache_pred_csv} -o {pred_embed_path}") # can change this path to wherever you store CheXbert
-    os.system(f"python /data/dangnguyen/report_generation/report-generation/CXRMetric/CheXbert/src/encode.py \
+    os.system(f"python ./CXRMetric/CheXbert/src/encode.py \
+              -c {CHEXBERT_PATH} -d {cache_pred_csv} -o {pred_embed_path}")
+    os.system(f"python ./CXRMetric/CheXbert/src/encode.py \
               -c {CHEXBERT_PATH} -d {cache_gt_csv} -o {gt_embed_path}")
     pred = add_semb_col(pred, pred_embed_path, gt_embed_path)
 
@@ -355,12 +277,6 @@ def calc_metric(gt_csv, pred_csv, out_csv, use_idf=False): # TODO: support singl
     # computing mean hallucination proportion
     hallu_prop = hallucination_prop(pred)
 
-    bleuscore = pred['bleu_score'].mean()
-    bertscore = pred['bertscore'].mean()
-
-    # print('{} {}'.format(bleuscore, bertscore))
-    # print('{} {} {}'.format(pos_f1, pos_f1_five, hallu_prop))
-
     # save results in the out folder
     pred.to_csv(out_csv, index=False)
     
@@ -371,7 +287,7 @@ def calc_metric(gt_csv, pred_csv, out_csv, use_idf=False): # TODO: support singl
     metrics_avg = np.concatenate([metrics_avg, label_neg_f1])
 
     COLS_2 = COLS + ['positive_f1','positive_f1_5','negative_f1','negative_f1_5','hall_prop']
-    COLS_2 += cxr_labels_2[:-1]
+    COLS_2 += CXR_LABELS_2[:-1]
     df_metrics_avg = pd.DataFrame(COLS_2, columns=['metrics'])
     df_metrics_avg['score'] = metrics_avg
     df_metrics_avg.round(3).to_csv(out_csv_avg, index=False)
