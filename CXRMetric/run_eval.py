@@ -16,8 +16,8 @@ from CXRMetric.radgraph_evaluate_model import run_radgraph
 from CXRMetric.CheXbert.src.label import label
 
 # Paths to chexbert and radgraph models
-CHEXBERT_PATH = './radiology_models/chexbert.pth'
-RADGRAPH_PATH ='./radiology_models/radgraph.tar.gz'
+CHEXBERT_PATH = './models/chexbert.pth'
+RADGRAPH_PATH ='./models/radgraph.tar.gz'
 
 REPORT_COL_NAME = "report"
 STUDY_ID_COL_NAME = "study_id"
