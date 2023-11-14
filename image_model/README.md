@@ -38,4 +38,4 @@ Update the vision model path in the integration command, which can be found in t
 
 We provide the checkpoint of our trained vision model 
 
-[Vision Model Checkpoint](#insert-link-here)
+[Vision Model Checkpoint](https://drive.google.com/file/d/12l-SeZ-SSR8xtVCVlJ0wDHwxVZ3iNcmh/view?usp=drive_link)

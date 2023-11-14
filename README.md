@@ -9,13 +9,20 @@ We expose the following functionalities discussed in the paper
 
 This code mainly works for [MIMIC-CXR](https://physionet.org/content/mimic-cxr/2.0.0/) [1], but can be adapted slightly to work with other chest X-ray datasets. We will discuss the relevant changes in each section. Make sure to obtain the license if you are working with MIMIC-CXR.
 
-TODO: update requirements.txt
+## Installing virtual environments
+
+There are two environments to be installed: one for the project in general `requirements.txt` and one specifically for evaluation `eval_requirements.txt`. We need a separate environment for evaluation due to version conflicts coming from RadGraph.
+
 
 ## Obtaining the relevant data and models
 
 The input to our model is a tuple of (image, indication). Please follow the relevant dataset instructions to obtain them, especially the indication section. For MIMIC-CXR, you can use [create_section_files.py](https://github.com/MIT-LCP/mimic-cxr/tree/master/txt) to extract the indication, findings, and impression sections.
 
-Our code uses CheXbert [2] to label reports and RadGraph [3] for evaluation. Please download the two model checkpoints [here](https://github.com/rajpurkarlab/CXR-Report-Metric) and put them in "./models/".
+Our code uses CheXbert [2] to label reports and RadGraph [3] for evaluation. Please download the two model checkpoints [here](https://github.com/rajpurkarlab/CXR-Report-Metric) and put them under "./models/".
+
+## Training an image classifier for detecting positive findings
+
+Please refer to the instructions under `/image_model/` for how to train an image classifier to detect positive findings according to the CheXbert labels.
 
 ## Report cleaning with large language models
 
