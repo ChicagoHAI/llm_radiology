@@ -5,7 +5,7 @@ from collections import OrderedDict
 import argparse
 import os
 
-from model.my_models import DenseChexpertModel
+from image_model.model.my_models import DenseChexpertModel
 from format_llama_input import labels_to_eng
 
 CXR_LABELS = ['Atelectasis', 'Cardiomegaly', 'Consolidation', 'Edema',
